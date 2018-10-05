@@ -74,9 +74,9 @@ void MDCallback(void *cbData, const char *type, bool isUnicode, const char *stri
     Serial.flush();
 }
 
-void mp3Play() {
+void mp3Play(char *filenm) {
     Serial.printf("Sample MP3 playback begins...\n");
-    file = new AudioFileSourceSPIFFS("/pno-cs.mp3");
+    file = new AudioFileSourceSPIFFS(filenm);
     id3 = new AudioFileSourceID3(file);
     id3->RegisterMetadataCB(MDCallback, (void*)"ID3TAG");
     out = new AudioOutputI2SNoDAC();
@@ -103,6 +103,7 @@ void setup()
     Serial.println(ESP.getFreeHeap());
 
     Blynk.begin(auth, ssid, pass);
+    mp3Play("/pno-cs.mp3");
 }
 
 void loop()
